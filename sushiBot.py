@@ -19,6 +19,14 @@ from numpy import *
 x_pad = 316
 y_pad = 307
 
+#the amount of food you start each level with
+foodOnHand = {'shrimp':5,
+              'rice':10,
+              'nori':10,
+              'roe':10,
+              'salmon':5,
+              'unagi':5}
+
 def screenGrab():
     box = (x_pad+1,y_pad+1,640+x_pad,480+y_pad)
     im = ImageGrab.grab(box)
@@ -83,22 +91,33 @@ class Cord:
 
 #Function to clear the plates based on their mined coordinates
 def clear_tables():
-    mousePos((90, 209))
+    mousePos((95, 205))
+    time.sleep(.2)
     leftClick()
+    time.sleep(.2)
  
-    mousePos((195, 213))
+    mousePos((196, 205))
+    time.sleep(.2)
     leftClick()
+    time.sleep(.2)
  
-    mousePos((292, 213))
+    mousePos((295, 203))
+    time.sleep(.2)
     leftClick()
+    time.sleep(.2)
  
-    mousePos((396, 214))
+    mousePos((400, 205))
+    time.sleep(.25)
     leftClick()
+    time.sleep(.2)
  
-    mousePos((494, 212))
+    mousePos((501, 205))
+    time.sleep(.2)
     leftClick()
+    time.sleep(.2)
  
-    mousePos((595, 210))
+    mousePos((601, 205))
+    time.sleep(.2)
     leftClick()
     time.sleep(1)
 
@@ -118,6 +137,9 @@ TODO: Add more recipes as the become unlocked
 def makeFood(food):
     if food == 'caliroll':
         print 'Making a caliroll'
+        foodOnHand['rice'] -= 1
+        foodOnHand['nori'] -= 1
+        foodOnHand['roe'] -= 1
         mousePos(Cord.f_rice)
         leftClick()
         time.sleep(.05)
@@ -132,6 +154,8 @@ def makeFood(food):
      
     elif food == 'onigiri':
         print 'Making a onigiri'
+        foodOnHand['rice'] -= 2 
+        foodOnHand['nori'] -= 1
         mousePos(Cord.f_rice)
         leftClick()
         time.sleep(.05)
@@ -147,6 +171,9 @@ def makeFood(food):
  
     elif food == 'gunkan':
         print 'Making a gunkan'
+        foodOnHand['rice'] -= 1 
+        foodOnHand['nori'] -= 1 
+        foodOnHand['roe'] -= 2
         mousePos(Cord.f_rice)
         leftClick()
         time.sleep(.05)
@@ -163,6 +190,9 @@ def makeFood(food):
         time.sleep(1.5)
     elif food == 'salmon':
         print 'Making a salmon roll'
+        foodOnHand['rice'] -= 1 
+        foodOnHand['nori'] -= 1 
+        foodOnHand['salmon'] -= 2
         mousePos(Cord.f_rice)
         leftClick()
         time.sleep(.05)
@@ -199,6 +229,9 @@ def buyFood(food):
             time.sleep(.1)
             leftClick()
             mousePos(Cord.delivery_norm)
+            foodOnHand['rice'] += 10
+            if foodOnHand['rice'] > 15:
+                foodOnHand['rice'] = 15
             time.sleep(.1)
             leftClick()
             time.sleep(2.5)
@@ -224,6 +257,9 @@ def buyFood(food):
             time.sleep(.1)
             leftClick()
             mousePos(Cord.delivery_norm)
+            foodOnHand['nori'] += 10
+            if foodOnHand['nori'] > 15:
+                foodOnHand['nori'] = 15
             time.sleep(.1)
             leftClick()
             time.sleep(2.5)
@@ -249,6 +285,9 @@ def buyFood(food):
             time.sleep(.1)
             leftClick()
             mousePos(Cord.delivery_norm)
+            foodOnHand['roe'] += 10
+            if foodOnHand['roe'] > 15:
+                foodOnHand['roe'] = 15
             time.sleep(.1)
             leftClick()
             time.sleep(2.5)
@@ -274,6 +313,9 @@ def buyFood(food):
             time.sleep(.1)
             leftClick()
             mousePos(Cord.delivery_norm)
+            foodOnHand['shrimp'] += 5
+            if foodOnHand['shrimp'] > 8:
+                foodOnHand['shrimp'] = 8
             time.sleep(.1)
             leftClick()
             time.sleep(2.5)
@@ -299,6 +341,9 @@ def buyFood(food):
             time.sleep(.1)
             leftClick()
             mousePos(Cord.delivery_norm)
+            foodOnHand['salmon'] += 5
+            if foodOnHand['salmon'] > 8:
+                foodOnHand['salmon'] = 8
             time.sleep(.1)
             leftClick()
             time.sleep(2.5)
@@ -324,6 +369,9 @@ def buyFood(food):
             time.sleep(.1)
             leftClick()
             mousePos(Cord.delivery_norm)
+            foodOnHand['unagi'] += 5
+            if foodOnHand['unagi'] > 8:
+                foodOnHand['unagi'] = 8
             time.sleep(.1)
             leftClick()
             time.sleep(2.5)
@@ -333,6 +381,22 @@ def buyFood(food):
             leftClick()
             time.sleep(1)
             buyFood(food)
+
+"""
+Function to monitor changes in current food level
+Note: Play around with different thresholds and order of checks
+"""
+def checkFood():
+    for food, quantity in foodOnHand.items():
+        if food == 'nori' or food == 'rice' or food == 'roe':
+            if quantity <= 3:
+                print 'Running low on %s' % food
+                buyFood(food)
+        else:
+            if quantity <= 1:
+                print 'Running low on %s' % food
+                buyFood(food)
+
 
 def startGame():
     #Click through the menus
