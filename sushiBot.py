@@ -8,19 +8,22 @@ The current coordinates are for 1600 x 900 screen resolution
 on the Chrome browser with the bookmarks toolbar enabled.
 """
 from PIL import ImageGrab
+from PIL import ImageOps
 import os
 import time
 import win32api
 import win32con
+from numpy import *
 
 #Global variables for top-left corner of game screen
 x_pad = 316
 y_pad = 307
 
 def screenGrab():
-	box = (x_pad+1,y_pad+1,640+x_pad,480+y_pad)
-	im = ImageGrab.grab(box)
-	im.save(os.getcwd() + '\\full_screen_' + str(int(time.time())) + '.png', 'PNG')
+    box = (x_pad+1,y_pad+1,640+x_pad,480+y_pad)
+    im = ImageGrab.grab(box)
+    return im
+    #im.save(os.getcwd() + '\\full_screen_' + str(int(time.time())) + '.png', 'PNG')
 
 def leftClick():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
@@ -174,6 +177,162 @@ def makeFood(food):
         time.sleep(.1)
         foldMat()
         time.sleep(1.5)
+
+"""
+Function to purchase the materials for making the food
+TODO: Add logic to let the bot decide whether it needs to continue
+waiting until it can afford something, or if it can do other tasks
+and return back to this at a later time
+"""
+def buyFood(food):
+    if food == 'rice':
+        mousePos(Cord.phone)
+        time.sleep(.1)
+        leftClick()
+        mousePos(Cord.menu_rice)
+        time.sleep(.05)
+        leftClick()
+        s = screenGrab()
+        if s.getpixel(Cord.buy_rice) != (127, 127, 127):
+            print 'rice is available'
+            mousePos(Cord.buy_rice)
+            time.sleep(.1)
+            leftClick()
+            mousePos(Cord.delivery_norm)
+            time.sleep(.1)
+            leftClick()
+            time.sleep(2.5)
+        else:
+            print 'rice is NOT available'
+            mousePos(Cord.t_exit)
+            leftClick()
+            time.sleep(1)
+            buyFood(food)
+
+    if food == 'nori':
+        mousePos(Cord.phone)
+        time.sleep(.1)
+        leftClick()
+        mousePos(Cord.menu_toppings)
+        time.sleep(.05)
+        leftClick()
+        s = screenGrab()
+        time.sleep(.1)
+        if s.getpixel(Cord.t_nori) != (33, 30, 11):
+            print 'nori is available'
+            mousePos(Cord.t_nori)
+            time.sleep(.1)
+            leftClick()
+            mousePos(Cord.delivery_norm)
+            time.sleep(.1)
+            leftClick()
+            time.sleep(2.5)
+        else:
+            print 'nori is NOT available'
+            mousePos(Cord.t_exit)
+            leftClick()
+            time.sleep(1)
+            buyFood(food)
+
+    if food == 'roe':
+        mousePos(Cord.phone)
+        time.sleep(.1)
+        leftClick()
+        mousePos(Cord.menu_toppings)
+        time.sleep(.05)
+        leftClick()
+        s = screenGrab()  
+        time.sleep(.1)
+        if s.getpixel(Cord.t_roe) != (127, 61, 0):
+            print 'roe is available'
+            mousePos(Cord.t_roe)
+            time.sleep(.1)
+            leftClick()
+            mousePos(Cord.delivery_norm)
+            time.sleep(.1)
+            leftClick()
+            time.sleep(2.5)
+        else:
+            print 'roe is NOT available'
+            mousePos(Cord.t_exit)
+            leftClick()
+            time.sleep(1)
+            buyFood(food)
+
+    if food == 'shrimp':
+        mousePos(Cord.phone)
+        time.sleep(.1)
+        leftClick()
+        mousePos(Cord.menu_toppings)
+        time.sleep(.05)
+        leftClick()
+        s = screenGrab()  
+        time.sleep(.1)
+        if s.getpixel(Cord.t_shrimp) != (127, 127, 127):
+            print 'shrimp is available'
+            mousePos(Cord.t_shrimp)
+            time.sleep(.1)
+            leftClick()
+            mousePos(Cord.delivery_norm)
+            time.sleep(.1)
+            leftClick()
+            time.sleep(2.5)
+        else:
+            print 'shrimp is NOT available'
+            mousePos(Cord.t_exit)
+            leftClick()
+            time.sleep(1)
+            buyFood(food)
+
+    if food == 'salmon':
+        mousePos(Cord.phone)
+        time.sleep(.1)
+        leftClick()
+        mousePos(Cord.menu_toppings)
+        time.sleep(.05)
+        leftClick()
+        s = screenGrab()  
+        time.sleep(.1)
+        if s.getpixel(Cord.t_salmon) != (127, 71, 47):
+            print 'salmon is available'
+            mousePos(Cord.t_salmon)
+            time.sleep(.1)
+            leftClick()
+            mousePos(Cord.delivery_norm)
+            time.sleep(.1)
+            leftClick()
+            time.sleep(2.5)
+        else:
+            print 'salmon is NOT available'
+            mousePos(Cord.t_exit)
+            leftClick()
+            time.sleep(1)
+            buyFood(food)
+
+    if food == 'unagi':
+        mousePos(Cord.phone)
+        time.sleep(.1)
+        leftClick()
+        mousePos(Cord.menu_toppings)
+        time.sleep(.05)
+        leftClick()
+        s = screenGrab()  
+        time.sleep(.1)
+        if s.getpixel(Cord.t_unagi) != (94, 49, 8):
+            print 'unagi is available'
+            mousePos(Cord.t_unagi)
+            time.sleep(.1)
+            leftClick()
+            mousePos(Cord.delivery_norm)
+            time.sleep(.1)
+            leftClick()
+            time.sleep(2.5)
+        else:
+            print 'unagi is NOT available'
+            mousePos(Cord.t_exit)
+            leftClick()
+            time.sleep(1)
+            buyFood(food)
 
 def startGame():
     #Click through the menus
