@@ -27,11 +27,84 @@ foodOnHand = {'shrimp':5,
               'salmon':5,
               'unagi':5}
 
+"""
+Sushi types dictionary that stores the value of each sushi
+that can be displayed above each persons head.
+The value of a sushi is defined by the values returned by the
+get_seat_# functions for each seat.
+A value is the sum of the grayscale pixels for a section of that sushi
+"""
+#TODO: Add more sushiTypes as game progresses!
+sushiTypes = {1817:'onigiri',
+              2461:'caliroll',
+              1824:'gunkan'}
+
 def screenGrab():
     box = (x_pad+1,y_pad+1,640+x_pad,480+y_pad)
     im = ImageGrab.grab(box)
     return im
     #im.save(os.getcwd() + '\\full_screen_' + str(int(time.time())) + '.png', 'PNG')
+
+"""
+Set of functions to grab and sum a section of the sushi
+displayed in each bubble above each guests head.
+Used to see what type of sushi to make
+"""
+def get_seat_one():
+    box = (x_pad+1+26,y_pad+1+61,x_pad+1+26+61,y_pad+1+61+14)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    print "Seat1:", a
+    #im.save(os.getcwd() + '\\seat_one__' + str(int(time.time())) + '.png', 'PNG')    
+    return a
+def get_seat_two():
+    box = (x_pad+1+127,y_pad+1+61,x_pad+1+127+61,y_pad+1+61+14)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    print "Seat2:", a
+    #im.save(os.getcwd() + '\\seat_two__' + str(int(time.time())) + '.png', 'PNG')    
+    return a
+def get_seat_three():
+    box = (x_pad+1+228,y_pad+1+61,x_pad+1+228+61,y_pad+1+61+14)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    print "Seat3:", a
+    #im.save(os.getcwd() + '\\seat_three__' + str(int(time.time())) + '.png', 'PNG')    
+    return a
+def get_seat_four():
+    box = (x_pad+1+329,y_pad+1+61,x_pad+1+329+61,y_pad+1+61+14)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    print "Seat4:", a
+    #im.save(os.getcwd() + '\\seat_four__' + str(int(time.time())) + '.png', 'PNG')    
+    return a
+def get_seat_five():
+    box = (x_pad+1+430,y_pad+1+61,x_pad+1+430+61,y_pad+1+61+14)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    print "Seat5:", a
+    #im.save(os.getcwd() + '\\seat_five__' + str(int(time.time())) + '.png', 'PNG')    
+    return a
+def get_seat_six():
+    box = (x_pad+1+531,y_pad+1+61,x_pad+1+531+61,y_pad+1+61+14)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    print "Seat6:", a
+    #im.save(os.getcwd() + '\\seat_six__' + str(int(time.time())) + '.png', 'PNG')    
+    return a
+def get_all_seats():
+    get_seat_one()
+    get_seat_two()
+    get_seat_three()
+    get_seat_four()
+    get_seat_five()
+    get_seat_six()
 
 def leftClick():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
