@@ -39,6 +39,17 @@ sushiTypes = {1817:'onigiri',
               2461:'caliroll',
               1824:'gunkan'}
 
+"""
+Class that holds color values for when there is no one seated
+"""
+class Blank:
+    seat1 = 6434
+    seat2 = 5832
+    seat3 = 10536
+    seat4 = 10228
+    seat5 = 6290
+    seat6 = 8689
+
 def screenGrab():
     box = (x_pad+1,y_pad+1,640+x_pad,480+y_pad)
     im = ImageGrab.grab(box)
@@ -493,8 +504,91 @@ def startGame():
     leftClick()
     time.sleep(.1)
 
+"""
+Driver function that holds the main bot logic
+"""
+def check_bubs():
+ 
+    checkFood()
+    s1 = get_seat_one()
+    if s1 != Blank.seat1:
+        if sushiTypes.has_key(s1):
+            print 'table 1 is occupied and needs %s' % sushiTypes[s1]
+            makeFood(sushiTypes[s1])
+        else:
+            print 'sushi not found!\n sushiType = %i' % s1
+ 
+    else:
+        print 'Table 1 unoccupied'
+ 
+    clear_tables()
+    checkFood()
+    s2 = get_seat_two()
+    if s2 != Blank.seat2:
+        if sushiTypes.has_key(s2):
+            print 'table 2 is occupied and needs %s' % sushiTypes[s2]
+            makeFood(sushiTypes[s2])
+        else:
+            print 'sushi not found!\n sushiType = %i' % s2
+ 
+    else:
+        print 'Table 2 unoccupied'
+ 
+    checkFood()
+    s3 = get_seat_three()
+    if s3 != Blank.seat3:
+        if sushiTypes.has_key(s3):
+            print 'table 3 is occupied and needs %s' % sushiTypes[s3]
+            makeFood(sushiTypes[s3])
+        else:
+            print 'sushi not found!\n sushiType = %i' % s3
+ 
+    else:
+        print 'Table 3 unoccupied'
+ 
+    checkFood()
+    s4 = get_seat_four()
+    if s4 != Blank.seat4:
+        if sushiTypes.has_key(s4):
+            print 'table 4 is occupied and needs %s' % sushiTypes[s4]
+            makeFood(sushiTypes[s4])
+        else:
+            print 'sushi not found!\n sushiType = %i' % s4
+ 
+    else:
+        print 'Table 4 unoccupied'
+ 
+    clear_tables()
+    checkFood()
+    s5 = get_seat_five()
+    if s5 != Blank.seat5:
+        if sushiTypes.has_key(s5):
+            print 'table 5 is occupied and needs %s' % sushiTypes[s5]
+            makeFood(sushiTypes[s5])
+        else:
+            print 'sushi not found!\n sushiType = %i' % s5
+ 
+    else:
+        print 'Table 5 unoccupied'
+ 
+    checkFood()
+    s6 = get_seat_six()
+    if s6 != Blank.seat6:
+        if sushiTypes.has_key(s6):
+            print 'table 1 is occupied and needs %s' % sushiTypes[s6]
+            makeFood(sushiTypes[s6])
+        else:
+            print 'sushi not found!\n sushiType = %i' % s6
+ 
+    else:
+        print 'Table 6 unoccupied'
+ 
+    clear_tables()
+
 def main():
-	pass
+    startGame()
+    while True:
+        check_bubs()
 
 if __name__ == '__main__':
 	main()
